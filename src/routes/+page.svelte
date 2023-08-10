@@ -15,8 +15,10 @@
 	// All times are in seconds.
 	let totDurationPerImage = 7;
 	let outTransition = 1;
-	let inTransition = 1;
+	let inTransition = 2;
 	let delayTransition = totDurationPerImage - outTransition;
+
+	let containerAnimation = null;
 
 	// Open a selection dialog for directories
 	const selectDir = async () => {
@@ -65,11 +67,14 @@
 			if (stopSlideshow === true) {
 				break;
 			}
+			containerAnimation = 'fade-in';
 			currentImage = image;
 			if (i < imageURLs.length - 1) {
 				imageToPreload = imageURLs[i + 1];
 			}
-			await new Promise((r) => setTimeout(r, 9000));
+			await new Promise((r) => setTimeout(r, delayTransition * 1000));
+			containerAnimation = 'fade-out';
+			await new Promise((r) => setTimeout(r, outTransition * 1000));
 		}
 
 		breakSlideshow();
@@ -108,9 +113,8 @@
 
 {#key currentImage}
 	<div
-		class="relative top-0 left-0 overflow-clip overflow-y-clip"
-		out:fade={{ delay: 0, duration: 1000 }}
-		in:fade={{ delay: 1000, duration: 500 }}
+		class="relative top-0 left-0 overflow-clip overflow-y-clip {containerAnimation}"
+		style="--inTime:{inTransition}s; --outTime:{outTransition}s; --delayTime: {delayTransition}s"
 	>
 		<img
 			class="z-[-500] object-cover absolute inset-0 m-auto min-w-full min-h-full blur pointer-events-none scale-110"
@@ -120,8 +124,7 @@
 
 		<div class="h-[100vh] w-[100vw] flex justify-center items-center">
 			<img
-				in:scale={{ delay: 1000, duration: 4500, opacity: 1 }}
-				class="object-contain max-h-[93vh] max-w-[93vw] p-8 bg-slate-100 bg-clip-padding shadow-xl shadow-black"
+				class="object-contain max-h-[93vh] max-w-[93vw] p-8 bg-slate-100 bg-clip-padding shadow-xl shadow-black scale-in"
 				alt="test2"
 				src={currentImage}
 			/>
@@ -141,7 +144,7 @@
 
 	.scale-in {
 		animation-name: scaleIn;
-		animation-duration: {inTransition}s;
+		animation-duration: 4.5s;
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
 	}
@@ -157,7 +160,7 @@
 
 	.fade-in {
 		animation-name: fadeIn;
-		animation-duration: 4.5s;
+		animation-duration: var(--inTime);
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
 	}
@@ -173,7 +176,7 @@
 
 	.fade-out {
 		animation-name: fadeOut;
-		animation-duration: 4.5s;
+		animation-duration: var(--outTime);
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
 	}
