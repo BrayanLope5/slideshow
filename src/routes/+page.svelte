@@ -89,6 +89,8 @@
 		isFullScreen = false;
 		await appWindow.setFullscreen(false);
 		imageURLs = [];
+
+		containerAnimation = null;
 	};
 
 	const toggleFullScreen = async () => {
