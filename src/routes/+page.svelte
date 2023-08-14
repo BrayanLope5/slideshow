@@ -1,96 +1,30 @@
 <script>
-	import { appWindow } from '@tauri-apps/api/window';
-	import { getImageURLs } from '../lib/utils/imagePaths.js';
-
-	let currentImage = null;
-	let imageToPreload = null;
-	let stopSlideshow = false;
-	let isFullScreen = false;
-	let imageURLs = null;
-
-	// All times are in seconds.
-	let totDurationPerImage = 7;
-	let outTransition = 1;
-	let inTransition = 2;
-	let delayTransition = totDurationPerImage - outTransition;
-
-	let containerAnimation = null;
-
-	const playSlideshow = async () => {
-		if (stopSlideshow === true) {
-			stopSlideshow = false;
-		}
-
-		for (const [i, image] of imageURLs.entries()) {
-			if (stopSlideshow === true) {
-				break;
-			}
-			containerAnimation = 'fade-in';
-			currentImage = image;
-			if (i < imageURLs.length - 1) {
-				imageToPreload = imageURLs[i + 1];
-			}
-			await new Promise((r) => setTimeout(r, delayTransition * 1000));
-			containerAnimation = 'fade-out';
-			await new Promise((r) => setTimeout(r, outTransition * 1000));
-		}
-
-		breakSlideshow();
-	};
-
-	const breakSlideshow = async () => {
-		stopSlideshow = true;
-
-		currentImage = null;
-		imageToPreload = null;
-		isFullScreen = false;
-		await appWindow.setFullscreen(false);
-		imageURLs = [];
-
-		containerAnimation = null;
-	};
-
-	const toggleFullScreen = async () => {
-		isFullScreen = !isFullScreen;
-		await appWindow.setFullscreen(isFullScreen);
-	};
+	import Controls from '$lib/components/Controls.svelte';
+	import { imagesPreAndCurr, times, containerAnim } from '$lib/utils/stores/stores';
 </script>
 
 <svelte:head>
-	<link rel="preload" as="image" href={imageToPreload} />
+	<link rel="preload" as="image" href={$imagesPreAndCurr.imageToPreload} />
 </svelte:head>
 
-<div class="flex flex-col gap-1 absolute z-[500] p-2">
-	<button
-		class="btn btn-primary"
-		on:click={async () => {
-			imageURLs = await getImageURLs();
-		}}>Select Folder</button
-	>
+<Controls />
 
-	<button class="btn btn-primary" on:click={playSlideshow}>Play slideshow</button>
-
-	<button class="btn btn-primary" on:click={breakSlideshow}>Stop slideshow</button>
-
-	<button class="btn btn-primary" on:click={toggleFullScreen}>Fullscreen</button>
-</div>
-
-{#key currentImage}
+{#key $imagesPreAndCurr.currentImage}
 	<div
-		class="relative top-0 left-0 overflow-clip overflow-y-clip {containerAnimation}"
-		style="--inTime: {inTransition}s; --outTime:{outTransition}s; --delayTime: {delayTransition}s"
+		class="relative top-0 left-0 overflow-clip overflow-y-clip {$containerAnim}"
+		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s"
 	>
 		<img
 			class="z-[-500] object-cover absolute inset-0 m-auto min-w-full min-h-full blur pointer-events-none scale-110"
 			alt="test2"
-			src={currentImage}
+			src={$imagesPreAndCurr.currentImage}
 		/>
 
 		<div class="h-[100vh] w-[100vw] flex justify-center items-center">
 			<img
 				class="object-contain max-h-[93vh] max-w-[93vw] p-8 bg-slate-100 bg-clip-padding shadow-xl shadow-black scale-in"
 				alt="test2"
-				src={currentImage}
+				src={$imagesPreAndCurr.currentImage}
 			/>
 		</div>
 	</div>

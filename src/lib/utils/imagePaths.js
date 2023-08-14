@@ -1,9 +1,9 @@
 import { open } from '@tauri-apps/api/dialog';
 import { readDir } from '@tauri-apps/api/fs';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
+import { imageURLs } from '$lib/utils/stores/stores';
 
 let selectedDir = null;
-let imageURLs = [];
 
 // Open a selection dialog for directories
 export const getImageURLs = async () => {
@@ -32,15 +32,13 @@ const getImagePaths = async () => {
 				// If entry is a directory, call this function again.
 				processEntries(entry.children);
 			} else {
-				// If entry is a file/image, convert it's path to url source and push image URL to array.
-				imageURLs.push(convertFileSrc(entry.path));
+				// If entry is a file/image, convert it's path to url source and update image URL to array.
+				imageURLs.update((URLs) => [...URLs, convertFileSrc(entry.path)]);
 			}
 		}
-		return imageURLs;
 	};
 
 	// Reads the selectedDir directory recursively.
 	const entries = await readDir(selectedDir, { recursive: true });
-
-	return processEntries(entries);
+	processEntries(entries);
 };
