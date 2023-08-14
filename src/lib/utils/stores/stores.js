@@ -6,7 +6,7 @@ export const imageURLs = writable([]);
 // URLs to current and image to preload.
 export const imagesPreAndCurr = writable({ currentImage: null, imageToPreload: null });
 
-// Times for animations and timers.
+// Times for animations and timers. With default values.
 // delayTransition: totDurationPerImage - outTransition,
 export const times = writable({
 	totDurationPerImage: 7,
