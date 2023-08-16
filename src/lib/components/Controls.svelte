@@ -1,7 +1,13 @@
 <script>
 	import { appWindow } from '@tauri-apps/api/window';
 	import { getImageURLs } from '$lib/utils/imagePaths.js';
-	import { imageURLs, imagesPreAndCurr, times, containerAnim } from '$lib/utils/stores/stores.js';
+	import {
+		imageURLs,
+		imagesPreAndCurr,
+		times,
+		containerAnim,
+		timerID
+	} from '$lib/utils/stores/stores.js';
 
 	let stopSlideshow = false;
 	let isFullScreen = false;
@@ -21,9 +27,14 @@
 			} else {
 				$imagesPreAndCurr = { currentImage: image, imageToPreload: null };
 			}
-			await new Promise((r) => setTimeout(r, $times.delayTransition * 1000));
+
+			await new Promise((resolve) => {
+				$timerID = setTimeout(resolve, $times.delayTransition * 1000);
+			});
 			$containerAnim = 'fade-out';
-			await new Promise((r) => setTimeout(r, $times.outTransition * 1000));
+			await new Promise((resolve) => {
+				$timerID = setTimeout(resolve, $times.outTransition * 1000);
+			});
 		}
 
 		breakSlideshow();
@@ -32,12 +43,15 @@
 	const breakSlideshow = async () => {
 		stopSlideshow = true;
 
-		$imagesPreAndCurr = { currentImage: null, imageToPreload: null };
 		isFullScreen = false;
 		await appWindow.setFullscreen(false);
-		$imageURLs = [];
 
+		$imagesPreAndCurr = { currentImage: null, imageToPreload: null };
+
+		$imageURLs = [];
 		$containerAnim = null;
+		clearTimeout($timerID);
+		$timerID = null;
 	};
 
 	const toggleFullScreen = async () => {

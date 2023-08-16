@@ -17,3 +17,6 @@ export const times = writable({
 
 // Current animation for main container.
 export const containerAnim = writable(null);
+
+// The ID of the active timer.
+export const timerID = writable(null);
