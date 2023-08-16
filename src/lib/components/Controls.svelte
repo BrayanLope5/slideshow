@@ -60,6 +60,12 @@
 		isFullScreen = !isFullScreen;
 		await appWindow.setFullscreen(isFullScreen);
 	};
+
+	const onKeyDown = async (e) => {
+		if (e.key === 'Escape') {
+			toggleFullScreen();
+		}
+	};
 </script>
 
 <div class="absolute z-[500] m-2">
@@ -91,3 +97,5 @@
 		</div>
 	</div>
 </div>
+
+<svelte:window on:keydown={onKeyDown} />
