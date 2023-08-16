@@ -19,4 +19,10 @@ export const times = writable({
 export const containerAnim = writable(null);
 
 // The ID of the active timer.
-export const timerID = writable(null);
+export const timerIDs = writable({
+	toOutTrans: null,
+	outTrans: null
+});
+
+// State of slideshow
+export const isPlaying = writable(false);

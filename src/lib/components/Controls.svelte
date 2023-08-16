@@ -6,19 +6,17 @@
 		imagesPreAndCurr,
 		times,
 		containerAnim,
-		timerID
+		timerIDs,
+		isPlaying
 	} from '$lib/utils/stores/stores.js';
 
-	let stopSlideshow = false;
 	let isFullScreen = false;
 
 	const playSlideshow = async () => {
-		if (stopSlideshow === true) {
-			stopSlideshow = false;
-		}
+		$isPlaying = true;
 
 		for (const [i, image] of $imageURLs.entries()) {
-			if (stopSlideshow === true) {
+			if ($isPlaying === false) {
 				break;
 			}
 			$containerAnim = 'fade-in';
@@ -29,11 +27,11 @@
 			}
 
 			await new Promise((resolve) => {
-				$timerID = setTimeout(resolve, $times.delayTransition * 1000);
+				$timerIDs.toOutTrans = setTimeout(resolve, $times.delayTransition * 1000);
 			});
 			$containerAnim = 'fade-out';
 			await new Promise((resolve) => {
-				$timerID = setTimeout(resolve, $times.outTransition * 1000);
+				$timerIDs.outTrans = setTimeout(resolve, $times.outTransition * 1000);
 			});
 		}
 
@@ -41,7 +39,7 @@
 	};
 
 	const breakSlideshow = async () => {
-		stopSlideshow = true;
+		$isPlaying = false;
 
 		isFullScreen = false;
 		await appWindow.setFullscreen(false);
@@ -50,8 +48,12 @@
 
 		$imageURLs = [];
 		$containerAnim = null;
-		clearTimeout($timerID);
-		$timerID = null;
+		clearTimeout($timerIDs.toOutTrans);
+		clearTimeout($timerIDs.outTrans);
+		$timerIDs = {
+			toOutTrans: null,
+			outTrans: null
+		};
 	};
 
 	const toggleFullScreen = async () => {
@@ -60,17 +62,32 @@
 	};
 </script>
 
-<div class="flex flex-col gap-1 absolute z-[500] p-2">
-	<button
-		class="btn btn-primary"
-		on:click={async () => {
-			await getImageURLs();
-		}}>Select Folder</button
-	>
+<div class="absolute z-[500] m-2">
+	<div class="collapse collapse-arrow bg-base-content/10">
+		<input type="checkbox" />
+		<div
+			class="collapse-title text-xl font-extrabold inline-flex items-center justify-center bg-base-content/10 text-base-content/50"
+		>
+			Settings
+		</div>
+		<div class="collapse-content flex flex-col gap-1 bg-base-content/10">
+			<button
+				class="btn btn-primary"
+				on:click={async () => {
+					await getImageURLs();
+				}}>Select Folder</button
+			>
 
-	<button class="btn btn-primary" on:click={playSlideshow}>Play slideshow</button>
+			<button
+				class="btn btn-primary"
+				on:click={playSlideshow}
+				disabled={$isPlaying || $imageURLs.length == false}
+				autocomplete="off">Play slideshow</button
+			>
 
-	<button class="btn btn-primary" on:click={breakSlideshow}>Stop slideshow</button>
+			<button class="btn btn-primary" on:click={breakSlideshow}>Stop slideshow</button>
 
-	<button class="btn btn-primary" on:click={toggleFullScreen}>Fullscreen</button>
+			<button class="btn btn-primary" on:click={toggleFullScreen}>Fullscreen</button>
+		</div>
+	</div>
 </div>
