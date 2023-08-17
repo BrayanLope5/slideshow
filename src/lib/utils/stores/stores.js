@@ -12,7 +12,8 @@ export const times = writable({
 	totDurationPerImage: 7,
 	outTransition: 1,
 	inTransition: 2,
-	delayTransition: 6
+	delayTransition: 6,
+	mainImageInTrans: 5
 });
 
 // Current animation for main container.

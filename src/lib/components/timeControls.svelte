@@ -48,3 +48,18 @@
 		step="0.5"
 	/>
 </div>
+
+<div class="form-control w-full">
+	<label for="mainImgInTransTime" class="label">
+		<span class="label-text">Main image in transition time.</span>
+	</label>
+	<input
+		type="number"
+		id="mainImgInTransTime"
+		bind:value={$times.mainImageInTrans}
+		min="1.0"
+		max="25.0"
+		class="input input-bordered input-primary input-sm text-xl"
+		step="0.5"
+	/>
+</div>

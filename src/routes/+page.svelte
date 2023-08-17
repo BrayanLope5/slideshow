@@ -12,7 +12,7 @@
 {#key $imagesPreAndCurr.currentImage}
 	<div
 		class="relative top-0 left-0 overflow-clip overflow-y-clip {$containerAnim}"
-		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s"
+		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s; --mainImageInTime: {$times.mainImageInTrans}s"
 	>
 		<img
 			class="z-[-500] object-cover absolute inset-0 m-auto min-w-full min-h-full blur pointer-events-none scale-110"
@@ -42,7 +42,7 @@
 
 	.scale-in {
 		animation-name: scaleIn;
-		animation-duration: 4.5s;
+		animation-duration: var(--mainImageInTime);
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
 	}
