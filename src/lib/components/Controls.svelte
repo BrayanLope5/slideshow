@@ -9,6 +9,7 @@
 		timerIDs,
 		isPlaying
 	} from '$lib/utils/stores/stores.js';
+	import TimeControls from '$lib/components/timeControls.svelte';
 
 	let isFullScreen = false;
 
@@ -94,6 +95,8 @@
 			<button class="btn btn-primary" on:click={breakSlideshow}>Stop slideshow</button>
 
 			<button class="btn btn-primary" on:click={toggleFullScreen}>Fullscreen</button>
+
+			<TimeControls />
 		</div>
 	</div>
 </div>
