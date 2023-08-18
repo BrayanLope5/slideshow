@@ -71,7 +71,7 @@
 
 <div class="absolute z-[500] m-2">
 	<div class="collapse collapse-arrow bg-base-content/10">
-		<input type="checkbox" />
+		<input type="checkbox" checked />
 		<div
 			class="collapse-title text-xl font-extrabold inline-flex items-center justify-center bg-base-content/10 text-base-content/50"
 		>
