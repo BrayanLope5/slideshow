@@ -49,9 +49,9 @@
 	/>
 </div>
 
-<div class="form-control w-full">
+<div class="form-control">
 	<label for="mainImgInTransTime" class="label">
-		<span class="label-text">Main image in transition time.</span>
+		<span class="label-text">Main image in transition time. test test test test test</span>
 	</label>
 	<input
 		type="number"
