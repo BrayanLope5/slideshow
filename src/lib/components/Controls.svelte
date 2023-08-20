@@ -69,7 +69,7 @@
 	};
 </script>
 
-<div class="absolute z-[500] m-2">
+<div class="absolute z-[500] m-2 max-w-min">
 	<div class="collapse collapse-arrow bg-base-content/10">
 		<input type="checkbox" checked />
 		<div
