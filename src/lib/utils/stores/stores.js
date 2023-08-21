@@ -27,3 +27,5 @@ export const timerIDs = writable({
 
 // State of slideshow
 export const isPlaying = writable(false);
+
+export const mainImageInAnim = writable('scale-in');

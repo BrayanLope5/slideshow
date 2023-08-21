@@ -10,6 +10,7 @@
 		isPlaying
 	} from '$lib/utils/stores/stores.js';
 	import TimeControls from '$lib/components/timeControls.svelte';
+	import TransitionSelection from './TransitionSelection.svelte';
 
 	let isFullScreen = false;
 
@@ -80,6 +81,7 @@
 		<div class="collapse-content flex flex-col gap-1 bg-base-content/10">
 			<button
 				class="btn btn-primary"
+				disabled={$isPlaying}
 				on:click={async () => {
 					await getImageURLs();
 				}}>Select Folder</button
@@ -95,6 +97,8 @@
 			<button class="btn btn-primary" on:click={breakSlideshow}>Stop slideshow</button>
 
 			<button class="btn btn-primary" on:click={toggleFullScreen}>Fullscreen</button>
+
+			<TransitionSelection />
 
 			<TimeControls />
 		</div>
