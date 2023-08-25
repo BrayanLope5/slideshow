@@ -10,7 +10,7 @@
 		isPlaying
 	} from '$lib/utils/stores/stores.js';
 	import TimeControls from '$lib/components/timeControls.svelte';
-	import TransitionSelection from './TransitionSelection.svelte';
+	import TransitionSelection from '$lib/components/TransitionSelection.svelte';
 
 	let isFullScreen = false;
 
