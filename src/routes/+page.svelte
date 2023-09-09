@@ -15,20 +15,21 @@
 <Controls />
 
 {#key $imagesPreAndCurr.currentImage}
+	<div class="bg-lime-600 absolute inset-0 z-[-501]" />
 	<div
 		class="relative top-0 left-0 overflow-clip overflow-y-clip {$containerAnim}"
-		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s; --mainImageInTime: {$times.mainImageInTrans}s"
+		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s; --mainImageInTime: {$times.mainImageInTrans}s;"
 	>
 		<img
 			class="z-[-500] object-cover absolute inset-0 m-auto min-w-full min-h-full blur pointer-events-none scale-110"
-			alt="test2"
+			alt="background"
 			src={$imagesPreAndCurr.currentImage}
 		/>
 
 		<div class="h-[100vh] w-[100vw] flex justify-center items-center">
 			<img
 				class="object-contain max-h-[93vh] max-w-[93vw] p-8 bg-slate-100 bg-clip-padding shadow-xl shadow-black {$mainImageInAnim}"
-				alt="test2"
+				alt="main"
 				src={$imagesPreAndCurr.currentImage}
 			/>
 		</div>
@@ -38,7 +39,7 @@
 <style lang="postcss">
 	@keyframes scaleIn {
 		0% {
-			transform: scale3d(0, 0, 0);
+			transform: scale3d(0, 0, 1);
 		}
 		100% {
 			transform: scale3d(1, 1, 1);
@@ -52,12 +53,12 @@
 		animation-timing-function: ease-in-out;
 	}
 
-	@keyframes scaleIn {
+	@keyframes slideIn {
 		0% {
-			transform: scale3d(0, 0, 0);
+			transform: translate(-100%, 0) scale3d(0, 0, 1);
 		}
 		100% {
-			transform: scale3d(1, 1, 1);
+			transform: translate(0, 0) scale3d(1, 1, 1);
 		}
 	}
 
@@ -66,15 +67,6 @@
 		animation-duration: var(--mainImageInTime);
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
-	}
-
-	@keyframes slideIn {
-		0% {
-			transform: translate(-100%, 0) scale3d(0, 0, 1);
-		}
-		100% {
-			transform: translate(0, 0) scale3d(1, 1, 1);
-		}
 	}
 
 	@keyframes fadeIn {
@@ -107,13 +99,5 @@
 		animation-duration: var(--outTime);
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
-	}
-
-	.will-change-opacity {
-		will-change: opacity;
-	}
-
-	.will-change-transform {
-		will-change: transform;
 	}
 </style>
