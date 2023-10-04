@@ -14,6 +14,11 @@
 	} else {
 		bgColor = 'rgb(226 232 240)';
 	}
+
+	import { appDataDir } from '@tauri-apps/api/path';
+	const init = async () => {
+		const appDataDirPath = await appDataDir();
+	}
 </script>
 
 <svelte:head>
