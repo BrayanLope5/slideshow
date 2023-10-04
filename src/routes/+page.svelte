@@ -4,8 +4,16 @@
 		imagesPreAndCurr,
 		times,
 		containerAnim,
-		mainImageInAnim
+		mainImageInAnim,
+		bgTheme
 	} from '$lib/utils/stores/stores';
+
+	let bgColor = 'rgb(2 6 23)';
+	$: if ($bgTheme == 'dark') {
+		bgColor = 'rgb(2 6 23)';
+	} else {
+		bgColor = 'rgb(226 232 240)';
+	}
 </script>
 
 <svelte:head>
@@ -15,7 +23,7 @@
 <Controls />
 
 {#key $imagesPreAndCurr.currentImage}
-	<div class="bg-lime-600 absolute inset-0 z-[-501]" />
+	<div class="bg absolute inset-0 z-[-501]" style="--bgColor: {bgColor};" />
 	<div
 		class="relative top-0 left-0 overflow-clip overflow-y-clip {$containerAnim}"
 		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s; --mainImageInTime: {$times.mainImageInTrans}s;"
@@ -37,6 +45,9 @@
 {/key}
 
 <style lang="postcss">
+	.bg {
+		background-color: var(--bgColor);
+	}
 	@keyframes scaleIn {
 		0% {
 			transform: scale3d(0, 0, 1);

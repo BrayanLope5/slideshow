@@ -29,3 +29,5 @@ export const timerIDs = writable({
 export const isPlaying = writable(false);
 
 export const mainImageInAnim = writable('scale-in');
+
+export const bgTheme = writable('dark');
