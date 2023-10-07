@@ -19,7 +19,6 @@
 
 	$: if ($imageURLs.length === 0) {
 		$imagesPreAndCurr = { currentImage: defaultImage, imageToPreload: null };
-		console.log('its zero');
 	}
 </script>
 
