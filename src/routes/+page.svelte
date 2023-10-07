@@ -1,12 +1,14 @@
 <script>
 	import Controls from '$lib/components/Controls.svelte';
 	import {
+		imageURLs,
 		imagesPreAndCurr,
 		times,
 		containerAnim,
 		mainImageInAnim,
 		bgTheme
 	} from '$lib/utils/stores/stores';
+	import defaultImage from '$lib/assets/images/default_image.jpg';
 
 	let bgColor = 'rgb(2 6 23)';
 	$: if ($bgTheme == 'dark') {
@@ -15,9 +17,8 @@
 		bgColor = 'rgb(226 232 240)';
 	}
 
-	import { appDataDir } from '@tauri-apps/api/path';
-	const init = async () => {
-		const appDataDirPath = await appDataDir();
+	$: if ($imageURLs.length === 0) {
+		$imagesPreAndCurr = { currentImage: defaultImage, imageToPreload: null };
 	}
 </script>
 

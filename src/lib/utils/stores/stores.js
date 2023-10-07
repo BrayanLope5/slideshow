@@ -9,11 +9,11 @@ export const imagesPreAndCurr = writable({ currentImage: null, imageToPreload: n
 // Times for animations and timers. With default values.
 // delayTransition: totDurationPerImage - outTransition,
 export const times = writable({
-	totDurationPerImage: 7,
+	totDurationPerImage: 9,
 	outTransition: 1,
 	inTransition: 2,
-	delayTransition: 6,
-	mainImageInTrans: 5
+	delayTransition: 8,
+	mainImageInTrans: 7
 });
 
 // Current animation for main container.
