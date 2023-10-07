@@ -18,7 +18,6 @@ export const getImageURLs = async () => {
 		return null;
 	} else {
 		// user selected a single directory
-		console.log(selectedDir);
 		return getImagePaths();
 	}
 };
