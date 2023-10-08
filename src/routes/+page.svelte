@@ -2,6 +2,7 @@
 	import Controls from '$lib/components/Controls.svelte';
 	import {
 		imageURLs,
+		isPlaying,
 		imagesPreAndCurr,
 		times,
 		containerAnim,
@@ -19,6 +20,8 @@
 
 	$: if ($imageURLs.length === 0) {
 		$imagesPreAndCurr = { currentImage: defaultImage, imageToPreload: null };
+	} else if ($imageURLs.length > 0 && !$isPlaying) {
+		$imagesPreAndCurr = { currentImage: defaultImage, imageToPreload: $imageURLs[0] };
 	}
 </script>
 
@@ -56,7 +59,7 @@
 	}
 	@keyframes scaleIn {
 		0% {
-			transform: scale3d(0, 0, 1);
+			transform: scale3d(0.5, 0.5, 1);
 		}
 		100% {
 			transform: scale3d(1, 1, 1);
