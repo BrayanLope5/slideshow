@@ -32,9 +32,9 @@
 <Controls />
 
 {#key $imagesPreAndCurr.currentImage}
-	<div class="bg absolute inset-0 z-[-501]" style="--bgColor: {bgColor};" />
+	<div class="bg absolute inset-0 z-[-501] pointer-events-none select-none" style="--bgColor: {bgColor};" />
 	<div
-		class="relative top-0 left-0 overflow-clip overflow-y-clip {$containerAnim}"
+		class="relative top-0 left-0 overflow-clip overflow-y-clip pointer-events-none select-none {$containerAnim}"
 		style="--inTime: {$times.inTransition}s; --outTime:{$times.outTransition}s; --delayTime: {$times.delayTransition}s; --mainImageInTime: {$times.mainImageInTrans}s;"
 	>
 		<img
